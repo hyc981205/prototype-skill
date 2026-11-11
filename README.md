@@ -52,7 +52,7 @@ DESIGN_SPEC.md + PROMPT.md    ───→    索引更新 → commit / tag
 |---|---|---|---|
 | [`packages/codex`](packages/codex) | Codex CLI / IDE | `AGENTS.md` + `.codex/skills/` + `prototypes/` | ✅ Python |
 | [`packages/claude-code`](packages/claude-code) | Claude Code | `CLAUDE.md` + `.claude/skills/` + `prototypes/` | ✅ Python |
-| [`packages/doubao`](packages/doubao) | 豆包工作 / 知识库型 agent | 5 份知识库 + 系统提示词 + 模板 | ❌ 中文准则 |
+| [`packages/doubao`](packages/doubao) | 豆包工作（桌面客户端） | 4 个 Skill 装进 `.user_skills` + 安装说明 | ✅ Python |
 | [`packages/workbuddy`](packages/workbuddy) | 腾讯 WorkBuddy | 4 个 Skill + 市场 zip | ✅ Python |
 
 每个包都有独立的 `使用说明.md`，包内文件路径自洽，可单独复制或打包使用。
@@ -73,7 +73,12 @@ cp packages/claude-code/CLAUDE.md <项目>/
 
 ### 豆包工作
 
-上传 `packages/doubao/知识库/` 下 5 个文件，把 `系统提示词.md` 粘到自定义指令。
+```powershell
+Copy-Item -Recurse -Force "packages/doubao/skills/*" `
+  "$env:LOCALAPPDATA\DoubaoWork\User Data\Default\.doubaowork\agent_mode\workspace\.user_skills"
+```
+
+装完重启客户端。细节与差异说明见 [`packages/doubao/使用说明.md`](packages/doubao/使用说明.md)。
 
 ### WorkBuddy
 
@@ -127,7 +132,7 @@ prototypes/<原型名>/
 
 ## 设计能力来源
 
-包内 `design-skills/` 与 `.codex/skills/` 下包含两个第三方设计 Skill：
+各包的 `skills/`、`.codex/skills/` 或 `.claude/skills/` 下包含两个第三方设计 Skill：
 
 - **frontend-design** — 高保真 UI 生成。许可证见各包内 `LICENSE.txt`
 - **ui-ux-pro-max** — 可检索设计数据库，MIT License，Copyright (c) 2024 Next Level Builder
